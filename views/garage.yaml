@@ -1,0 +1,131 @@
+title: Garage
+path: garage
+icon: mdi:garage-variant
+type: panel
+cards:
+  - type: custom:button-card
+    template: base
+    styles:
+      card:
+        - height: 100vh
+        - background: var(--example-bg)
+        - padding: 12px 24px 12px 0
+      grid:
+        - grid-template-areas: '"rail head" "rail body"'
+        - grid-template-columns: 96px minmax(0, 1fr)
+        - grid-template-rows: 104px minmax(0, 1fr)
+        - column-gap: 8px
+        - row-gap: 12px
+    custom_fields:
+      rail:
+        card:
+          type: vertical-stack
+          cards:
+            - type: custom:button-card
+              template: rail_item
+              name: Home
+              icon: mdi:view-grid-outline
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/home
+              variables:
+                attivo: false
+            - type: custom:button-card
+              template: rail_item
+              name: Lounge
+              icon: mdi:sofa-outline
+            - type: custom:button-card
+              template: rail_item
+              name: Studio
+              icon: mdi:desk
+            - type: custom:button-card
+              template: rail_item
+              name: Rooms
+              icon: mdi:door-open
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/rooms
+              variables:
+                attivo: false
+            - type: custom:button-card
+              template: rail_item
+              name: Security
+              icon: mdi:shield-home-outline
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/security
+              variables:
+                attivo: false
+            - type: custom:button-card
+              template: rail_item
+              name: Climate
+              icon: mdi:thermostat
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/climate
+              variables:
+                attivo: false
+            - type: custom:button-card
+              template: rail_item
+              name: Garage
+              icon: mdi:garage-variant
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/garage
+              variables:
+                attivo: true
+            - type: custom:button-card
+              template: rail_item
+              entity: input_boolean.night_mode_example
+              name: Night
+              icon: mdi:weather-night
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/night
+              variables:
+                attivo: false
+
+      head:
+        card:
+          type: markdown
+          content: >
+            ## Example data · Garage
+
+
+            Wednesday 18 March · an invented garage, not a real building
+      body:
+        card:
+          type: horizontal-stack
+          cards:
+            - type: picture
+              image: /local/img/example-garage-scene.png
+              alt: Invented example garage illustration, not a real place
+            - type: vertical-stack
+              cards:
+                - type: custom:button-card
+                  template:
+                    - status_card
+                    - icon_cover
+                  name: Garage door
+                  label: open
+                  entity: cover.garage_door_example
+                - type: custom:button-card
+                  template:
+                    - status_card
+                    - icon_light
+                  name: Light
+                  label: on
+                  entity: light.garage_example
+                - type: custom:button-card
+                  template: status_card
+                  name: Car
+                  label: present (example)
+                  icon: mdi:car
+                  entity: binary_sensor.car_present_example
+                - type: picture
+                  image: /local/img/example-garage-camera.png
+                  alt: Illustrated example camera view, not a real snapshot
+                - type: markdown
+                  content: >
+                    **Camera (example)** — illustrated still, not a live
+                    feed and not a real snapshot.

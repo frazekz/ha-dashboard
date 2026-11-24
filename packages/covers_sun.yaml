@@ -1,0 +1,29 @@
+# Covers and the sun — example.
+# The live house groups covers into day and night rooms and moves them
+# from the good-night and good-morning scripts. This package adds a
+# simple sun hook on top of that idea: open after sunrise unless the
+# good-night scene is still active; close at sunset.
+# Skip it if you prefer to move covers only by hand or from the scripts.
+
+automation:
+  - id: covers_open_after_sunrise_example
+    alias: Open covers after sunrise (example)
+    trigger:
+      - platform: sun
+        event: sunrise
+        offset: "00:20:00"
+    condition:
+      - condition: state
+        entity_id: input_boolean.good_night_active_example
+        state: "off"
+    action:
+      - action: script.covers_up_example
+
+  - id: covers_close_at_sunset_example
+    alias: Close covers at sunset (example)
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: "00:10:00"
+    action:
+      - action: script.covers_down_example

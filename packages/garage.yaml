@@ -1,0 +1,56 @@
+# Garage — example.
+# Inspired by a real garage routine (a door that should not stay open,
+# a light, a vehicle presence, and an alert if the door is still open
+# when good night starts) but rewritten with generic entity ids.
+# There is no real camera feed, no vehicle brand, and no number plate.
+
+automation:
+  # Car arrives → turn the garage light on so the arrival is visible.
+  - id: garage_car_arrives_light_example
+    alias: Garage light on when the car arrives (example)
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.car_present_example
+        from: "off"
+        to: "on"
+    action:
+      - action: light.turn_on
+        target:
+          entity_id: light.garage_example
+
+  # Door left open for 15 minutes → a reminder (no vendor notify service).
+  - id: garage_door_open_15min_example
+    alias: Garage door open for 15 minutes (example)
+    trigger:
+      - platform: state
+        entity_id: cover.garage_door_example
+        to: open
+        for:
+          minutes: 15
+    action:
+      - action: persistent_notification.create
+        data:
+          title: Garage door still open (example)
+          message: The example garage door has been open for 15 minutes.
+          notification_id: garage_door_open_15min_example
+
+  # Good night starts while the door is still open → warn, do not force-close.
+  - id: garage_door_open_at_good_night_example
+    alias: Garage door open at good night (example)
+    trigger:
+      - platform: state
+        entity_id: input_boolean.good_night_active_example
+        to: "on"
+      - platform: state
+        entity_id: script.good_night_example
+        to: "on"
+    condition:
+      - condition: state
+        entity_id: cover.garage_door_example
+        state: open
+    action:
+      - action: persistent_notification.create
+        data:
+          title: Garage door open at good night (example)
+          message: Good night ran while the example garage door was still open.
+          notification_id: garage_door_open_at_good_night_example

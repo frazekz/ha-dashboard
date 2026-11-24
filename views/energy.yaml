@@ -1,0 +1,181 @@
+title: Energy
+path: energy
+icon: mdi:lightning-bolt-outline
+type: panel
+cards:
+  - type: custom:button-card
+    template: base
+    styles:
+      card:
+        - height: 100vh
+        - background: var(--example-bg)
+        - padding: 12px 24px 12px 0
+      grid:
+        - grid-template-areas: '"rail head" "rail body"'
+        - grid-template-columns: 96px minmax(0, 1fr)
+        - grid-template-rows: 104px minmax(0, 1fr)
+        - column-gap: 8px
+        - row-gap: 12px
+    custom_fields:
+      rail:
+        card:
+            type: vertical-stack
+            cards:
+              - type: custom:button-card
+                template: rail_item
+                name: Home
+                icon: mdi:view-grid-outline
+                variables:
+                  attivo: false
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/home
+              - type: custom:button-card
+                template: rail_item
+                name: Lounge
+                icon: mdi:sofa-outline
+                variables:
+                  attivo: false
+              - type: custom:button-card
+                template: rail_item
+                name: Studio
+                icon: mdi:desk
+                variables:
+                  attivo: false
+              - type: custom:button-card
+                template: rail_item
+                name: Rooms
+                icon: mdi:door-open
+                variables:
+                  attivo: false
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/rooms
+              - type: custom:button-card
+                template: rail_item
+                name: Security
+                icon: mdi:shield-home-outline
+                variables:
+                  attivo: false
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/security
+              - type: custom:button-card
+                template: rail_item
+                name: Climate
+                icon: mdi:thermostat
+                variables:
+                  attivo: false
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/climate
+              - type: custom:button-card
+                template: rail_item
+                name: Garage
+                icon: mdi:garage-variant
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/garage
+                variables:
+                  attivo: false
+              - type: custom:button-card
+                template: rail_item
+                name: 3D map
+                icon: mdi:floor-plan
+                variables:
+                  attivo: false
+              - type: custom:button-card
+                template: rail_item
+                entity: input_boolean.night_mode_example
+                name: Night
+                icon: mdi:weather-night
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/night
+                variables:
+                  attivo: false
+      head:
+        card:
+          type: markdown
+          content: >
+            ## Example data · Energy
+
+
+            Wednesday 18 March · bind the clock and weather to your own sensors.
+      body:
+        card:
+          type: horizontal-stack
+          cards:
+            - type: vertical-stack
+              cards:
+                - type: custom:button-card
+                  template: meter_bar
+                  name: Solar
+                  label: 8.1 kWh
+                  entity: sensor.energy_solar_today_example
+                  variables:
+                    pct: 65
+                - type: custom:button-card
+                  template: meter_bar
+                  name: Home use
+                  label: 12.4 kWh
+                  entity: sensor.energy_home_today_example
+                  variables:
+                    pct: 100
+                - type: custom:button-card
+                  template: meter_bar
+                  name: From the grid
+                  label: 4.6 kWh
+                  entity: sensor.energy_grid_today_example
+                  variables:
+                    pct: 37
+                - type: custom:button-card
+                  template: meter_bar
+                  name: Feed-in
+                  label: 0.8 kWh
+                  entity: sensor.energy_feedin_today_example
+                  variables:
+                    pct: 6
+            - type: vertical-stack
+              cards:
+                - type: markdown
+                  content: >
+                    # 12.4
+
+                    kWh today (example)
+                - type: custom:button-card
+                  template: stat_cell
+                  name: This month
+                  label: 285 kWh
+                  entity: sensor.energy_month_example
+                - type: custom:button-card
+                  template: stat_cell
+                  name: This year
+                  label: 3.1 MWh
+                  entity: sensor.energy_year_example
+                - type: custom:button-card
+                  template: stat_cell
+                  name: Peak today
+                  label: 3.2 kW
+                  entity: sensor.energy_peak_example
+            - type: vertical-stack
+              cards:
+                - type: custom:button-card
+                  template: stat_cell
+                  name: Self-consumed
+                  label: 65%
+                  entity: sensor.energy_self_ratio_example
+                - type: custom:button-card
+                  template: stat_cell
+                  name: From the grid
+                  label: 37%
+                - type: custom:button-card
+                  template: stat_cell
+                  name: Example cost today
+                  label: 3.20
+                  entity: sensor.energy_cost_today_example
+                - type: custom:button-card
+                  template: stat_cell
+                  name: Solar coverage
+                  label: 8.1 of 12.4 kWh
+

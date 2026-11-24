@@ -1,0 +1,27 @@
+# Sensor notifications — example.
+# Uses persistent_notification so the package does not assume a phone
+# or a vendor notify service. Point the action at your own notify
+# service if you want it on a device.
+
+automation:
+  - id: opening_while_armed_example
+    alias: Opening while the alarm is armed (example)
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.front_door_example
+          - binary_sensor.terrace_door_example
+          - binary_sensor.lounge_window_example
+        to: "on"
+    condition:
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: alarm_control_panel.home_example
+            state: disarmed
+    action:
+      - action: persistent_notification.create
+        data:
+          title: Opening while armed (example)
+          message: A door or window opened while the alarm was not disarmed.
+          notification_id: opening_while_armed_example

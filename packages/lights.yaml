@@ -1,0 +1,34 @@
+# Evening presence lighting — example.
+# Pattern: after sunset, a motion sensor can turn a room light on;
+# when motion stays clear for a few minutes, the light turns off.
+# Restart mode retriggers the off-timer if motion is seen again.
+
+automation:
+  - id: lounge_evening_presence_example
+    alias: Lounge evening presence (example)
+    mode: restart
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.lounge_motion_example
+        to: "on"
+    condition:
+      - condition: state
+        entity_id: sun.sun
+        state: below_horizon
+      # Do not fight the good-night scene
+      - condition: state
+        entity_id: input_boolean.good_night_active_example
+        state: "off"
+    action:
+      - action: light.turn_on
+        target:
+          entity_id: light.lounge_example
+      - wait_for_trigger:
+          - platform: state
+            entity_id: binary_sensor.lounge_motion_example
+            to: "off"
+            for:
+              minutes: 8
+      - action: light.turn_off
+        target:
+          entity_id: light.lounge_example

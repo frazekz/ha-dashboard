@@ -1,0 +1,26 @@
+action_pill:
+  template: base
+  show_icon: true
+  show_name: true
+  show_label: true
+  styles:
+    card:
+      - border-radius: 22px
+      - padding: 0 14px
+      - background: "[[[ return {acc:'var(--example-accent)', amb:'var(--example-amber)'}[variables.tono] || 'var(--example-card)'; ]]]"
+      - box-shadow: "[[[ return variables.tono === 'neutro' ? 'inset 0 0 0 1px var(--example-line)' : 'none'; ]]]"
+    grid:
+      - grid-template-areas: '"i n" "i l"'
+      - grid-template-columns: 52px minmax(0, 1fr)
+      - column-gap: 12px
+    icon:
+      - width: 28px
+      - height: 28px
+    name:
+      - font-size: 17px
+      - font-weight: 800
+      - justify-self: start
+    label:
+      - font-size: 13px
+      - font-weight: 700
+      - justify-self: start

@@ -1,0 +1,73 @@
+meter_bar:
+  template: base
+  show_icon: false
+  show_name: true
+  show_label: true
+  styles:
+    card:
+      - padding: 0
+      - background: none
+    grid:
+      - grid-template-areas: '"n l" "b b"'
+      - grid-template-columns: minmax(0, 1fr) auto
+      - row-gap: 6px
+    name:
+      - font-size: 15px
+      - font-weight: 800
+      - justify-self: start
+    label:
+      - font-size: 18px
+      - font-weight: 800
+      - justify-self: end
+  custom_fields:
+    b: >
+      [[[
+        const p = Math.max(0, Math.min(100, Number(variables.pct) || 0));
+        return `<div style="height:16px;border-radius:8px;background:var(--example-card-2);overflow:hidden">
+          <div style="height:100%;width:${p}%;background:var(--example-accent);border-radius:8px"></div>
+        </div>`;
+      ]]]
+
+stat_cell:
+  template: base
+  show_icon: false
+  show_name: true
+  show_label: true
+  styles:
+    card:
+      - border-radius: 14px
+      - padding: 10px 12px
+      - background: var(--example-card-2)
+    grid:
+      - grid-template-areas: '"n" "l"'
+      - justify-items: start
+    name:
+      - font-size: 12px
+      - font-weight: 700
+      - color: var(--example-muted)
+    label:
+      - font-size: 18px
+      - font-weight: 800
+
+mode_btn:
+  template: base
+  show_icon: true
+  show_name: true
+  styles:
+    card:
+      - border-radius: 14px
+      - height: 48px
+      - background: "[[[ return variables.attivo ? 'var(--example-accent)' : 'var(--example-card-2)'; ]]]"
+    name:
+      - font-size: 15px
+      - font-weight: 800
+      - color: "[[[ return variables.attivo ? '#FFFFFF' : 'var(--example-text)'; ]]]"
+    icon:
+      - width: 20px
+      - height: 20px
+      - color: "[[[ return variables.attivo ? '#FFFFFF' : 'var(--example-text)'; ]]]"
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: auto auto
+      - justify-content: center
+      - column-gap: 8px

@@ -1,0 +1,21 @@
+# Never publish these — they are not part of this public edition
+secrets.yaml
+.storage/
+.cloud/
+.ssh/
+*.db
+*.db-shm
+*.db-wal
+home-assistant_v2.db*
+*.log
+deps/
+tts/
+blueprints/
+.HA_VERSION
+NOTE-NON-PUBBLICARE.md
+
+# Local screenshot sources, not part of the public tree
+img-src/
+
+# Local GIF/screenshot preview frames, not part of the public tree
+www/img/_preview*

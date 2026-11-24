@@ -1,0 +1,144 @@
+# State-based CSS icon animations.
+# The idea (animate the icon from the entity state, with CSS keyframes)
+# comes from matt8707/hass-config button_card_templates/icons.yaml and
+# extra_styles.yaml. The drawings and the motion here are original and
+# follow this dashboard's colour system.
+
+icon_light:
+  show_icon: false
+  show_name: true
+  show_label: true
+  styles:
+    custom_fields:
+      icon:
+        - width: 40px
+        - height: 40px
+        - margin: 0 auto
+  extra_styles: |
+    [[[
+      return `
+        .bulb-wrap { width: 40px; height: 40px; }
+        .bulb-wrap svg { width: 40px; height: 40px; overflow: visible; }
+        .bulb-wrap .glow {
+          opacity: 0; transform-origin: 12px 10px;
+          transition: opacity 0.35s ease;
+        }
+        .bulb-wrap.on .glow {
+          opacity: 1;
+          animation: bulb-glow 1.6s ease-in-out infinite;
+        }
+        .bulb-wrap .glass { fill: var(--example-card-2); transition: fill 0.35s ease; }
+        .bulb-wrap.on .glass { fill: #F5DA9A; }
+        @keyframes bulb-glow {
+          0%, 100% { transform: scale(1); opacity: 0.55; }
+          50% { transform: scale(1.18); opacity: 0.95; }
+        }
+      `;
+    ]]]
+  custom_fields:
+    icon: |
+      [[[
+        const on = entity && ['on','playing','cleaning'].includes(entity.state);
+        return `<div class="bulb-wrap ${on ? 'on' : 'off'}">
+          <svg viewBox="0 0 24 24">
+            <circle class="glow" cx="12" cy="10" r="8" fill="#F5DA9A"/>
+            <path class="glass" d="M9 2h6a5 5 0 0 1 5 5c0 2.4-1.4 3.8-2.6 5.2-.8.9-1.4 1.8-1.4 2.8V16H8v-1c0-1-.6-1.9-1.4-2.8C5.4 10.8 4 9.4 4 7a5 5 0 0 1 5-5z"/>
+            <path fill="#1B2421" fill-opacity=".55" d="M9 17h6v2a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-2z"/>
+          </svg>
+        </div>`;
+      ]]]
+
+icon_cover:
+  show_icon: false
+  extra_styles: |
+    [[[
+      return `
+        .shutter { width: 40px; height: 40px; }
+        .shutter svg { width: 40px; height: 40px; }
+        .shutter .slat { transform-box: fill-box; transform-origin: 50% 0; transition: transform 0.7s ease; }
+        .shutter.open .s1 { transform: translateY(-2px); }
+        .shutter.open .s2 { transform: translateY(-5px); }
+        .shutter.open .s3 { transform: translateY(-8px); }
+        .shutter.open .s4 { transform: translateY(-11px); }
+        .shutter.closed .slat { transform: translateY(0); }
+      `;
+    ]]]
+  custom_fields:
+    icon: |
+      [[[
+        const st = entity ? entity.state : 'closed';
+        const open = ['open','opening'].includes(st);
+        return `<div class="shutter ${open ? 'open' : 'closed'}">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="3" width="16" height="18" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <g class="slats" fill="currentColor">
+              <rect class="slat s1" x="6" y="5" width="12" height="2.2" rx="0.4"/>
+              <rect class="slat s2" x="6" y="8.4" width="12" height="2.2" rx="0.4"/>
+              <rect class="slat s3" x="6" y="11.8" width="12" height="2.2" rx="0.4"/>
+              <rect class="slat s4" x="6" y="15.2" width="12" height="2.2" rx="0.4"/>
+            </g>
+          </svg>
+        </div>`;
+      ]]]
+
+icon_vacuum:
+  show_icon: false
+  extra_styles: |
+    [[[
+      return `
+        .vac { width: 40px; height: 40px; }
+        .vac svg { width: 40px; height: 40px; overflow: visible; }
+        .vac .wheel { transform-origin: center; transform-box: fill-box; }
+        .vac.cleaning .wheel { animation: wheel-spin 0.7s linear infinite; }
+        .vac.cleaning .body { animation: vac-wobble 0.9s ease-in-out infinite; }
+        @keyframes wheel-spin { to { transform: rotate(360deg); } }
+        @keyframes vac-wobble {
+          0%,100% { transform: translateX(0); }
+          50% { transform: translateX(1.2px); }
+        }
+      `;
+    ]]]
+  custom_fields:
+    icon: |
+      [[[
+        const st = entity ? entity.state : 'docked';
+        const run = ['cleaning','returning'].includes(st);
+        return `<div class="vac ${run ? 'cleaning' : 'docked'}">
+          <svg viewBox="0 0 24 24">
+            <ellipse class="body" cx="12" cy="13" rx="8" ry="6" fill="currentColor"/>
+            <circle class="wheel" cx="7.5" cy="16.5" r="2.1" fill="var(--example-card)" stroke="currentColor" stroke-width="0.8"/>
+            <circle class="wheel" cx="16.5" cy="16.5" r="2.1" fill="var(--example-card)" stroke="currentColor" stroke-width="0.8"/>
+            <circle cx="12" cy="11" r="2" fill="var(--example-card)"/>
+          </svg>
+        </div>`;
+      ]]]
+
+icon_alarm:
+  show_icon: false
+  extra_styles: |
+    [[[
+      return `
+        .lock { width: 40px; height: 40px; }
+        .lock svg { width: 40px; height: 40px; overflow: visible; }
+        .lock .shackle { transform-origin: 8px 8px; transition: transform 0.45s ease; }
+        .lock.disarmed .shackle { transform: rotate(-35deg) translateX(-1px); }
+        .lock.armed .body { animation: lock-pulse 1.8s ease-in-out infinite; }
+        @keyframes lock-pulse {
+          0%,100% { filter: none; }
+          50% { filter: drop-shadow(0 0 4px var(--example-accent)); }
+        }
+      `;
+    ]]]
+  custom_fields:
+    icon: |
+      [[[
+        const st = entity ? entity.state : 'disarmed';
+        const armed = st && st !== 'disarmed' && st !== 'unavailable';
+        return `<div class="lock ${armed ? 'armed' : 'disarmed'}">
+          <svg viewBox="0 0 24 24">
+            <path class="shackle" d="M8 10V8a4 4 0 0 1 8 0v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <rect class="body" x="6" y="10" width="12" height="10" rx="2" fill="currentColor"/>
+            <circle cx="12" cy="15" r="1.3" fill="var(--example-card)"/>
+          </svg>
+        </div>`;
+      ]]]

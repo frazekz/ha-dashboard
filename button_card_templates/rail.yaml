@@ -1,0 +1,21 @@
+rail_item:
+  template: base
+  show_icon: true
+  show_name: true
+  styles:
+    card:
+      - border-radius: 16px
+      - padding: 12px 0 10px
+      - min-height: 72px
+      - background: "[[[ return variables.attivo ? 'var(--example-accent-soft)' : 'none'; ]]]"
+    grid:
+      - grid-template-areas: '"i" "n"'
+      - justify-items: center
+    icon:
+      - width: 32px
+      - height: 32px
+      - color: "[[[ return variables.attivo ? 'var(--example-accent-text)' : 'var(--example-muted)'; ]]]"
+    name:
+      - font-weight: 800
+      - font-size: 13px
+      - color: "[[[ return variables.attivo ? 'var(--example-accent-text)' : 'var(--example-muted)'; ]]]"

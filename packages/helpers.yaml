@@ -1,0 +1,42 @@
+# Example helpers used by the dashboard and the other packages.
+# Replace every *_example entity with your own. These names are fictional.
+
+input_boolean:
+  # Darkens the tablet UI (day/night palette). Separate from the good-night scene:
+  # you can dim the wall tablet without running the full evening routine.
+  night_mode_example:
+    name: Night mode (example)
+    icon: mdi:weather-night
+
+  # Remembers that the good-night scene has been run, so the home action
+  # can switch to a good-morning action until it is cleared.
+  good_night_active_example:
+    name: Good night is active (example)
+    icon: mdi:weather-night
+
+template:
+  - sensor:
+      - name: Lights on count (example)
+        unique_id: lights_on_count_example
+        state: >
+          {{ [
+            'light.lounge_example',
+            'light.kitchen_example',
+            'light.studio_example',
+            'light.bedroom_example',
+            'light.bath_example',
+            'light.garage_example'
+          ] | select('is_state', 'on') | list | count }}
+        icon: mdi:lightbulb-group-outline
+
+      - name: Indoor temperature (example)
+        unique_id: indoor_temp_average_example
+        unit_of_measurement: "°C"
+        state: >
+          {{ [
+            states('sensor.lounge_temp_example'),
+            states('sensor.studio_temp_example'),
+            states('sensor.kitchen_temp_example'),
+            states('sensor.bedroom_temp_example')
+          ] | map('float', none) | reject('eq', none) | average | round(1, default=none) }}
+        icon: mdi:thermometer

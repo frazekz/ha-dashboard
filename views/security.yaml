@@ -1,0 +1,225 @@
+title: Security
+path: security
+icon: mdi:shield-home-outline
+type: panel
+cards:
+  - type: custom:button-card
+    template: base
+    styles:
+      card:
+        - height: 100vh
+        - background: var(--example-bg)
+        - padding: 12px 24px 12px 0
+      grid:
+        - grid-template-areas: '"rail head" "rail body"'
+        - grid-template-columns: 96px minmax(0, 1fr)
+        - grid-template-rows: 104px minmax(0, 1fr)
+        - column-gap: 8px
+        - row-gap: 12px
+    custom_fields:
+      rail:
+        card:
+            type: vertical-stack
+            cards:
+              - type: custom:button-card
+                template: rail_item
+                name: Home
+                icon: mdi:view-grid-outline
+                variables:
+                  attivo: false
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/home
+              - type: custom:button-card
+                template: rail_item
+                name: Lounge
+                icon: mdi:sofa-outline
+                variables:
+                  attivo: false
+              - type: custom:button-card
+                template: rail_item
+                name: Studio
+                icon: mdi:desk
+                variables:
+                  attivo: false
+              - type: custom:button-card
+                template: rail_item
+                name: Rooms
+                icon: mdi:door-open
+                variables:
+                  attivo: false
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/rooms
+              - type: custom:button-card
+                template: rail_item
+                name: Security
+                icon: mdi:shield-home-outline
+                variables:
+                  attivo: true
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/security
+              - type: custom:button-card
+                template: rail_item
+                name: Climate
+                icon: mdi:thermostat
+                variables:
+                  attivo: false
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/climate
+              - type: custom:button-card
+                template: rail_item
+                name: Garage
+                icon: mdi:garage-variant
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/garage
+                variables:
+                  attivo: false
+              - type: custom:button-card
+                template: rail_item
+                name: 3D map
+                icon: mdi:floor-plan
+                variables:
+                  attivo: false
+              - type: custom:button-card
+                template: rail_item
+                entity: input_boolean.night_mode_example
+                name: Night
+                icon: mdi:weather-night
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/night
+                variables:
+                  attivo: false
+      head:
+        card:
+          type: markdown
+          content: >
+            ## Example data · Security
+
+
+            Wednesday 18 March · bind the clock and weather to your own sensors.
+      body:
+        card:
+          type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
+                - type: vertical-stack
+                  cards:
+                    - type: custom:button-card
+                      template: status_card
+                      name: Alarm
+                      label: disarmed
+                      icon: mdi:shield-home-outline
+                      entity: alarm_control_panel.home_example
+                    - type: custom:button-card
+                      template: mode_btn
+                      name: Arm home
+                      icon: mdi:home-outline
+                      entity: alarm_control_panel.home_example
+                      tap_action:
+                        action: call-service
+                        service: alarm_control_panel.alarm_arm_home
+                        service_data:
+                          entity_id: alarm_control_panel.home_example
+                    - type: custom:button-card
+                      template: mode_btn
+                      name: Arm away
+                      icon: mdi:walk
+                      entity: alarm_control_panel.home_example
+                      tap_action:
+                        action: call-service
+                        service: alarm_control_panel.alarm_arm_away
+                        service_data:
+                          entity_id: alarm_control_panel.home_example
+                    - type: custom:button-card
+                      template: mode_btn
+                      name: Disarm
+                      icon: mdi:lock-open-outline
+                      entity: alarm_control_panel.home_example
+                      variables:
+                        attivo: true
+                      tap_action:
+                        action: call-service
+                        service: alarm_control_panel.alarm_disarm
+                        service_data:
+                          entity_id: alarm_control_panel.home_example
+                - type: vertical-stack
+                  cards:
+                    - type: horizontal-stack
+                      cards:
+                        - type: custom:button-card
+                          template: sensor_tile
+                          name: Front door
+                          label: closed
+                          icon: mdi:door
+                          entity: binary_sensor.front_door_example
+                        - type: custom:button-card
+                          template: sensor_tile
+                          name: Terrace door
+                          label: closed
+                          icon: mdi:door
+                          entity: binary_sensor.terrace_door_example
+                        - type: custom:button-card
+                          template: sensor_tile
+                          name: Lounge window
+                          label: closed
+                          icon: mdi:window-closed
+                          entity: binary_sensor.lounge_window_example
+                    - type: horizontal-stack
+                      cards:
+                        - type: custom:button-card
+                          template: sensor_tile
+                          name: Kitchen window
+                          label: closed
+                          icon: mdi:window-closed
+                          entity: binary_sensor.kitchen_window_example
+                        - type: custom:button-card
+                          template: sensor_tile
+                          name: Bedroom window
+                          label: closed
+                          icon: mdi:window-closed
+                          entity: binary_sensor.bedroom_window_example
+                        - type: custom:button-card
+                          template: sensor_tile
+                          name: Studio window
+                          label: closed
+                          icon: mdi:window-closed
+                          entity: binary_sensor.studio_window_example
+                    - type: horizontal-stack
+                      cards:
+                        - type: custom:button-card
+                          template: sensor_tile
+                          name: Lounge motion
+                          label: clear
+                          icon: mdi:motion-sensor
+                          entity: binary_sensor.lounge_motion_example
+                        - type: custom:button-card
+                          template: sensor_tile
+                          name: Studio motion
+                          label: clear
+                          icon: mdi:motion-sensor
+                          entity: binary_sensor.studio_motion_example
+                        - type: custom:button-card
+                          template: sensor_tile
+                          name: Back gate
+                          label: locked
+                          icon: mdi:gate
+                          entity: binary_sensor.back_gate_example
+            - type: markdown
+              content: >
+                **Recent events (example)**
+
+
+                Front door opened · 08:14
+
+
+                Alarm disarmed · 08:15
+
+
+                Terrace door closed · 18:02
+

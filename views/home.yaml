@@ -1,0 +1,173 @@
+title: Home
+path: home
+icon: mdi:view-grid-outline
+type: panel
+cards:
+  - type: custom:button-card
+    template: base
+    styles:
+      card:
+        - height: 100vh
+        - background: var(--example-bg)
+        - padding: 12px 24px 12px 0
+      grid:
+        - grid-template-areas: '"rail head" "rail body"'
+        - grid-template-columns: 96px minmax(0, 1fr)
+        - grid-template-rows: 104px minmax(0, 1fr)
+        - column-gap: 8px
+        - row-gap: 12px
+    custom_fields:
+      rail:
+        card:
+          type: vertical-stack
+          cards:
+            - type: custom:button-card
+              template: rail_item
+              name: Home
+              icon: mdi:view-grid-outline
+              variables:
+                attivo: true
+            - type: custom:button-card
+              template: rail_item
+              name: Lounge
+              icon: mdi:sofa-outline
+            - type: custom:button-card
+              template: rail_item
+              name: Studio
+              icon: mdi:desk
+            - type: custom:button-card
+              template: rail_item
+              name: Rooms
+              icon: mdi:door-open
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/rooms
+            - type: custom:button-card
+              template: rail_item
+              name: Security
+              icon: mdi:shield-home-outline
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/security
+            - type: custom:button-card
+              template: rail_item
+              name: Climate
+              icon: mdi:thermostat
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/climate
+            - type: custom:button-card
+              template: rail_item
+              name: Garage
+              icon: mdi:garage-variant
+              tap_action:
+                action: navigate
+                navigation_path: /lovelace/garage
+            - type: custom:button-card
+              template: rail_item
+              name: 3D map
+              icon: mdi:floor-plan
+            - type: custom:button-card
+              template: rail_item
+              entity: input_boolean.night_mode_example
+              name: Night
+              icon: mdi:weather-night
+              tap_action:
+                action: toggle
+      head:
+        card:
+          type: horizontal-stack
+          cards:
+            - type: markdown
+              content: >
+                ## 10:24
+
+                Wednesday 18 March
+
+                _Example clock — bind this to your time sensor._
+            - type: markdown
+              content: >
+                **Today** 16° / 8° · **Tomorrow** 14° / 7° · **Next day** 15° / 9°
+
+                House temperature **20.5°** (example)
+      body:
+        card:
+          type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
+                - type: custom:button-card
+                  template:
+                    - action_pill
+                    - icon_light
+                  name: Turn off lights
+                  label: 3 on
+                  icon: mdi:lightbulb-group-outline
+                  entity: script.turn_off_lights_example
+                  tap_action:
+                    action: call-service
+                    service: script.turn_off_lights_example
+                  variables:
+                    tono: amb
+                - type: custom:button-card
+                  template:
+                    - action_pill
+                    - icon_cover
+                  name: Covers up
+                  label: day and night
+                  icon: mdi:window-shutter-open
+                  entity: script.covers_up_example
+                  variables:
+                    tono: neutro
+                - type: custom:button-card
+                  template:
+                    - action_pill
+                    - icon_cover
+                  name: Covers down
+                  label: day and night
+                  icon: mdi:window-shutter
+                  entity: script.covers_down_example
+                  variables:
+                    tono: neutro
+                - type: custom:button-card
+                  template: action_pill
+                  name: Good night
+                  label: lights, covers, alarm
+                  icon: mdi:weather-night
+                  entity: script.good_night_example
+                  variables:
+                    tono: acc
+            - type: horizontal-stack
+              cards:
+                - type: picture
+                  image: /local/img/example-plan.png
+                  alt: Fictional example apartment plan with sample room states
+                - type: vertical-stack
+                  cards:
+                    - type: custom:button-card
+                      template: status_card
+                      name: Air is good
+                      label: "PM2.5 9 · PM10 14 µg/m³"
+                      icon: mdi:blur
+                      entity: sensor.air_quality_example
+                    - type: custom:button-card
+                      template:
+                        - status_card
+                        - icon_alarm
+                      name: Alarm
+                      label: disarmed
+                      icon: mdi:shield-home-outline
+                      entity: alarm_control_panel.home_example
+                    - type: custom:button-card
+                      template:
+                        - status_card
+                        - icon_vacuum
+                      name: Robot
+                      label: docked
+                      icon: mdi:robot-vacuum
+                      entity: vacuum.robot_example
+                    - type: custom:button-card
+                      template: status_card
+                      name: More
+                      label: lights, covers, energy, calendar
+                      icon: mdi:dots-grid

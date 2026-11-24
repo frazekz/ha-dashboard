@@ -1,0 +1,31 @@
+room_tile:
+  template: base
+  show_icon: true
+  show_name: true
+  show_label: true
+  show_state: true
+  styles:
+    card:
+      - border-radius: 20px
+      - padding: 0 14px 0 10px
+      - background: "[[[ return variables.acceso ? 'var(--example-amber)' : 'var(--example-card)'; ]]]"
+      - box-shadow: "[[[ return variables.acceso ? 'none' : 'inset 0 0 0 1px var(--example-line)'; ]]]"
+    grid:
+      - grid-template-areas: '"i n s" "i l s"'
+      - grid-template-columns: 48px minmax(0, 1fr) auto
+      - column-gap: 12px
+      - align-items: center
+    icon:
+      - width: 22px
+      - height: 22px
+    name:
+      - font-size: 16px
+      - font-weight: 800
+      - justify-self: start
+    label:
+      - font-size: 12.5px
+      - font-weight: 700
+      - justify-self: start
+    state:
+      - font-size: 22px
+      - font-weight: 300

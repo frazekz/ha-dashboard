@@ -1,0 +1,24 @@
+# Public example edition of a custom Home Assistant dashboard.
+# Replace entity ids, timezone and name with your own before use.
+# Do not drop this file onto a live system without reviewing it.
+
+default_config:
+
+homeassistant:
+  name: Example Home
+  unit_system: metric
+  # time_zone: Your/Timezone
+  packages: !include_dir_named packages
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+lovelace:
+  mode: yaml
+  resources:
+    - url: /hacsfiles/button-card/button-card.js
+      type: module
+    - url: /hacsfiles/lovelace-card-mod/card-mod.js
+      type: module
+    - url: /hacsfiles/kiosk-mode/kiosk-mode.js
+      type: module

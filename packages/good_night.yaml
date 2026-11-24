@@ -1,0 +1,112 @@
+# Good night / good morning — example scene.
+# Inspired by a real household routine: turn lights (and light switches) off,
+# close the covers, arm the alarm at home, and remember that the scene ran.
+# Two helpers stay separate: good_night_active_example (the scene) and
+# night_mode_example (the tablet palette).
+# continue_on_error is used so a single unavailable cover or light does not
+# stop the rest of the sequence.
+
+script:
+  turn_off_lights_example:
+    alias: Turn off lights (example)
+    icon: mdi:lightbulb-group-outline
+    mode: single
+    sequence:
+      - action: light.turn_off
+        target:
+          entity_id:
+            - light.lounge_example
+            - light.kitchen_example
+            - light.studio_example
+            - light.bedroom_example
+            - light.bath_example
+            - light.garage_example
+        continue_on_error: true
+
+  covers_up_example:
+    alias: Covers up (example)
+    icon: mdi:window-shutter-open
+    mode: single
+    sequence:
+      - action: cover.open_cover
+        target:
+          entity_id:
+            - cover.terrace_example
+            - cover.lounge_example
+            - cover.bedroom_example
+        continue_on_error: true
+
+  covers_down_example:
+    alias: Covers down (example)
+    icon: mdi:window-shutter
+    mode: single
+    sequence:
+      - action: cover.close_cover
+        target:
+          entity_id:
+            - cover.terrace_example
+            - cover.lounge_example
+            - cover.bedroom_example
+        continue_on_error: true
+
+  good_night_example:
+    alias: Good night (example)
+    description: >
+      Turns off lights and light switches, closes covers, arms the alarm
+      at home, and turns on the good-night and tablet night-mode helpers.
+    icon: mdi:weather-night
+    mode: single
+    sequence:
+      - action: light.turn_off
+        target:
+          entity_id:
+            - light.lounge_example
+            - light.kitchen_example
+            - light.studio_example
+            - light.bedroom_example
+            - light.bath_example
+            - light.garage_example
+        continue_on_error: true
+      # Some wall or outdoor lights are switched as sockets, not as light.*
+      - action: switch.turn_off
+        target:
+          entity_id:
+            - switch.outdoor_light_example
+        continue_on_error: true
+      - action: cover.close_cover
+        target:
+          entity_id:
+            - cover.terrace_example
+            - cover.lounge_example
+            - cover.bedroom_example
+        continue_on_error: true
+      - action: alarm_control_panel.alarm_arm_home
+        target:
+          entity_id: alarm_control_panel.home_example
+        continue_on_error: true
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.good_night_active_example
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.night_mode_example
+
+  good_morning_example:
+    alias: Good morning (example)
+    description: >
+      Opens the covers again and clears the good-night helper.
+      Night mode on the tablet is left as it is, so the palette can stay
+      dark until you turn it off on the wall view.
+    icon: mdi:weather-sunny
+    mode: single
+    sequence:
+      - action: cover.open_cover
+        target:
+          entity_id:
+            - cover.terrace_example
+            - cover.lounge_example
+            - cover.bedroom_example
+        continue_on_error: true
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.good_night_active_example

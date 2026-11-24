@@ -1,0 +1,40 @@
+# Colour system used by the example home view (day / night).
+# Night is switched in the dashboard with input_boolean.night_mode_example,
+# not only by this theme. Keep both in sync if you add a theme toggle.
+example_home:
+  modes:
+    light:
+      example-bg: "#ECEFEC"
+      example-card: "#FFFFFF"
+      example-card-2: "#E4E9E5"
+      example-line: "#D3DAD5"
+      example-text: "#1B2421"
+      example-muted: "#4E5A55"
+      example-accent: "#1F6F6B"
+      example-accent-soft: "#D6E9E5"
+      example-accent-text: "#0F4643"
+      example-amber: "#F5DA9A"
+      example-amber-text: "#43300B"
+      example-map: "#E8E6F0"
+    dark:
+      example-bg: "#0F1513"
+      example-card: "#18211E"
+      example-card-2: "#222D29"
+      example-line: "#2D3935"
+      example-text: "#E6EDEA"
+      example-muted: "#A9B6B1"
+      example-accent: "#78C6BD"
+      example-accent-soft: "#1C3631"
+      example-accent-text: "#C3E8E2"
+      example-amber: "#D9B35E"
+      example-amber-text: "#241A05"
+      example-map: "#E8E6F0"
+  primary-color: "#1F6F6B"
+  accent-color: "#1F6F6B"
+  app-header-background-color: "var(--example-bg)"
+  primary-background-color: "var(--example-bg)"
+  card-background-color: "var(--example-card)"
+  primary-text-color: "var(--example-text)"
+  secondary-text-color: "var(--example-muted)"
+  ha-font-family-body: "Nunito, sans-serif"
+  primary-font-family: "Nunito, sans-serif"

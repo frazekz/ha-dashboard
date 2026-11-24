@@ -1,0 +1,13 @@
+title: Example Home
+button_card_templates: !include_dir_merge_named button_card_templates/
+kiosk_mode:
+  hide_header: true
+  hide_sidebar: true
+views:
+  - !include views/home.yaml
+  - !include views/rooms.yaml
+  - !include views/climate.yaml
+  - !include views/security.yaml
+  - !include views/energy.yaml
+  - !include views/garage.yaml
+  - !include views/night.yaml

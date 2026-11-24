@@ -1,0 +1,16 @@
+# Tablet night palette — example.
+# night_mode_example is the helper the dashboard uses for the dark palette.
+# Good night turns it on. This automation turns it off after sunrise,
+# unless you prefer to leave the wall tablet dark until a tap on Night.
+
+automation:
+  - id: tablet_night_off_after_sunrise_example
+    alias: Clear tablet night mode after sunrise (example)
+    trigger:
+      - platform: sun
+        event: sunrise
+        offset: "00:30:00"
+    action:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.night_mode_example

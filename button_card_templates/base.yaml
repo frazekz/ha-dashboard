@@ -1,0 +1,13 @@
+base:
+  show_icon: true
+  show_name: true
+  show_state: false
+  show_label: false
+  tap_action:
+    action: none
+  styles:
+    card:
+      - font-family: Nunito, sans-serif
+      - box-shadow: none
+      - border: none
+      - padding: 0

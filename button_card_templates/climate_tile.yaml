@@ -1,0 +1,25 @@
+climate_tile:
+  template: base
+  show_icon: false
+  show_name: true
+  show_label: true
+  show_state: true
+  styles:
+    card:
+      - border-radius: 22px
+      - padding: 16px 18px
+      - background: var(--example-card)
+      - box-shadow: inset 0 0 0 1px var(--example-line)
+    grid:
+      - grid-template-areas: '"n" "s" "l"'
+      - justify-items: start
+    name:
+      - font-size: 17px
+      - font-weight: 800
+    state:
+      - font-size: 44px
+      - font-weight: 300
+    label:
+      - font-size: 13px
+      - font-weight: 700
+      - color: var(--example-muted)
