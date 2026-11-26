@@ -1,0 +1,76 @@
+# Connectivity alerts — example.
+# Two patterns that are easy to get wrong:
+#   1. "Internet down" only after a few minutes, and only when *both*
+#      WAN latency probes are missing (or the gateway itself is offline),
+#      so one flaky probe does not raise an alert.
+#   2. "Internet restored" is sent only after a "down" alert was sent.
+#      A separate restore automation would also fire when the router
+#      integration simply reloads, which gives false "restored" messages.
+# Uses persistent_notification so the package does not assume a phone
+# or a vendor notify service. Point the actions at your own notify
+# service if you want them on a device.
+
+automation:
+  - id: internet_down_example
+    alias: Internet down (example)
+    mode: single
+    max_exceeded: silent
+    trigger:
+      - platform: template
+        value_template: >-
+          {{ (states('sensor.gateway_wan_latency_a_example') in ['unavailable', 'unknown']
+              and states('sensor.gateway_wan_latency_b_example') in ['unavailable', 'unknown'])
+             or states('sensor.gateway_state_example') != 'connected' }}
+        for: "00:05:00"
+    action:
+      - action: persistent_notification.create
+        data:
+          title: Internet down (example)
+          message: No WAN latency from either probe, or the gateway is offline, for 5 minutes.
+          notification_id: internet_status_example
+      # Wait here for the connection to come back. The restore message
+      # can only be sent from inside this run, so it never fires alone.
+      - wait_for_trigger:
+          - platform: template
+            value_template: >-
+              {{ states('sensor.gateway_state_example') == 'connected'
+                 and (states('sensor.gateway_wan_latency_a_example') | is_number
+                      or states('sensor.gateway_wan_latency_b_example') | is_number) }}
+            for: "00:01:00"
+      - action: persistent_notification.create
+        data:
+          title: Internet restored (example)
+          message: The connection is back.
+          notification_id: internet_status_example
+
+  - id: device_offline_example
+    alias: Network device offline (example)
+    mode: single
+    max_exceeded: silent
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.storage_server_example
+        to: "off"
+        for: "00:10:00"
+    condition:
+      # If the whole internet is down, the internet alert already covers it.
+      - condition: template
+        value_template: >-
+          {{ states('sensor.gateway_wan_latency_a_example') | is_number
+             or states('sensor.gateway_wan_latency_b_example') | is_number }}
+    action:
+      - action: persistent_notification.create
+        data:
+          title: Device offline (example)
+          message: The example storage server has been offline for 10 minutes.
+          notification_id: device_offline_example
+      - wait_for_trigger:
+          - platform: state
+            entity_id: binary_sensor.storage_server_example
+            to: "on"
+            for: "00:01:00"
+      - action: persistent_notification.create
+        data:
+          title: Device back online (example)
+          message: The example storage server is reachable again.
+          notification_id: device_offline_example

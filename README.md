@@ -4,7 +4,7 @@ A tablet-first dashboard built on top of Home Assistant: a left rail, a large cl
 
 The images below use **example data** and a **fictional apartment and garage**. They show the interface, not a real house. This public edition is a **cleaned, reduced example** — not a drop-in copy of a live configuration, and not a HACS package.
 
-Public repository (once published): [github.com/frazekz/ha-dashboard](https://github.com/frazekz/ha-dashboard)
+Public repository: [github.com/frazekz/ha-dashboard](https://github.com/frazekz/ha-dashboard)
 
 ![Icons follow the entity state](www/img/animations.gif)
 
@@ -66,7 +66,7 @@ When a project takes cues from work that already does something well, it should 
 - A Garage view with an invented scene (door, light, generic car) and an illustrated camera still
 - A Night wall view: large clock and a few big actions for a hallway tablet
 - Quick actions for lights, covers, and a good-night scene
-- Example packages: good-night and good-morning scripts, presence lighting, sun-linked covers, sensor alerts, tablet night mode, and a garage arrival / open-door reminder
+- Example packages: good-night and good-morning scripts, presence lighting, sun-linked covers, sensor alerts, connectivity alerts, tablet night mode, and a garage arrival / open-door reminder
 - Side rail for Home, rooms, climate, security, garage, and a 3D map shortcut
 - YAML-mode Lovelace, so the layout lives in the repo
 - Built for a landscape tablet; kiosk mode can hide the default header and sidebar
@@ -87,6 +87,7 @@ These are generic examples, written so you can read the intent and then point th
 - **Sensor alerts** (`packages/sensor_alerts.yaml`). If a door or window opens while the alarm is not disarmed, raise a persistent notification.
 - **Tablet night mode** (`packages/tablet_night.yaml`). Optionally clear the night palette a while after sunrise.
 - **Garage** (`packages/garage.yaml`). When the example car-present sensor turns on, turn the garage light on. If the garage door stays open for 15 minutes, or if good night starts while the door is open, raise a persistent notification.
+- **Connectivity alerts** (`packages/connectivity_alerts.yaml`). Raise a notification when both WAN latency probes are missing, or the gateway is offline, for 5 minutes; send "restored" only from inside that same run, so a router integration reload never produces a false "restored" message. A second example does the same for one network device, and stays quiet while the whole internet is down.
 
 ## Installation / How to adapt
 
@@ -136,6 +137,7 @@ A short history of this *public* edition only. No live entity ids, and no person
 - Reduced public edition: home view, day/night theme, and a small set of `button-card` templates, with a fictional plan and example data.
 - Further views rewritten in the same style: Rooms, Climate, Security (sensors only), Energy, and Night wall.
 - Packages for example automations and scripts; state-based icon animations; Garage view with an invented scene and illustrated camera still; GIFs of the icon and garage transitions; the AI-assisted workflow written down in `docs/`.
+- Connectivity alerts package: internet-down alert with two probes and a delay, restore message only after a down alert, and a device-offline example.
 
 ## Credits
 
